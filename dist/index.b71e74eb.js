@@ -557,7 +557,69 @@ function hmrAccept(bundle, id) {
 }
 
 },{}],"h7u1C":[function(require,module,exports) {
-console.log(`hello`);
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+var _user = require("./models/User");
+var _userDefault = parcelHelpers.interopDefault(_user);
+const user = new (0, _userDefault.default)({
+    name: `unknown`,
+    age: 0
+});
+console.log(user.get(`age`));
+user.set({
+    name: `Felipe`,
+    age: 32
+});
+console.log(user);
+
+},{"./models/User":"4rcHn","@parcel/transformer-js/src/esmodule-helpers.js":"hNMw2"}],"4rcHn":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+class User {
+    constructor(data){
+        this.data = data;
+        this.events = {};
+    }
+    get(propName) {
+        return this.data[propName];
+    }
+    set(update) {
+        Object.assign(this.data, update);
+    }
+    on(eventName, callback) {
+    //
+    }
+}
+exports.default = User;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"hNMw2"}],"hNMw2":[function(require,module,exports) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, "__esModule", {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === "default" || key === "__esModule" || dest.hasOwnProperty(key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
 
 },{}]},["gzU1l","h7u1C"], "h7u1C", "parcelRequire94c2")
 

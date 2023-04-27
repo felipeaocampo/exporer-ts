@@ -1,0 +1,24 @@
+{
+  "name": "exporer-ts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start:parcel": "npx parcel index.html",
+    "start:db": "npx json-server -w ./src/db.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/felipeaocampo/exporer-ts.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/felipeaocampo/exporer-ts/issues"
+  },
+  "homepage": "https://github.com/felipeaocampo/exporer-ts#readme",
+  "dependencies": {
+    "json-server": "^0.17.3"
+  }
+}

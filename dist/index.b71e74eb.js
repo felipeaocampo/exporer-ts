@@ -561,23 +561,34 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _user = require("./models/User");
 var _userDefault = parcelHelpers.interopDefault(_user);
 const user = new (0, _userDefault.default)({
-    name: `unknown`,
+    name: `Mark`,
     age: 0
 });
-console.log(user.get(`age`));
-user.set({
-    name: `Felipe`,
-    age: 32
-});
-console.log(user);
+// user.set({ name: `NEW NAME`, age: 100 });
+// user.save();
+user.events.on(`change`, ()=>console.log(`changed!`));
+user.events.trigger(`change`); // user.on(`change`, () => console.log(`change #1`));
+ // user.on(`change`, () => console.log(`change #2`));
+ // user.on(`asdf`, () => console.log(`change #3`));
+ // user.ownFetch();
+ // fetch(`http://localhost:3000/users/1`)
+ //   .then((res) => res.json())
+ //   .then((data) => {
+ //     console.log(data);
+ //   });
+ // setTimeout(() => {
+ //   console.log(user);
+ // }, 4000);
 
 },{"./models/User":"4rcHn","@parcel/transformer-js/src/esmodule-helpers.js":"hNMw2"}],"4rcHn":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+var _eventing = require("./Eventing");
+var _eventingDefault = parcelHelpers.interopDefault(_eventing);
 class User {
     constructor(data){
         this.data = data;
-        this.events = {};
+        this.events = new (0, _eventingDefault.default)();
     }
     get(propName) {
         return this.data[propName];
@@ -585,13 +596,10 @@ class User {
     set(update) {
         Object.assign(this.data, update);
     }
-    on(eventName, callback) {
-    //
-    }
 }
 exports.default = User;
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"hNMw2"}],"hNMw2":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"hNMw2","./Eventing":"7459s"}],"hNMw2":[function(require,module,exports) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
@@ -621,6 +629,24 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}]},["gzU1l","h7u1C"], "h7u1C", "parcelRequire94c2")
+},{}],"7459s":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+class Eventing {
+    events = {};
+    on(eventName, callback) {
+        const handlers = this.events[eventName] || [];
+        handlers.push(callback);
+        this.events[eventName] = handlers;
+    }
+    trigger(eventName) {
+        const handlers = this.events[eventName];
+        if (!handlers || handlers.length === 0) return;
+        handlers.forEach((callback)=>callback());
+    }
+}
+exports.default = Eventing;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"hNMw2"}]},["gzU1l","h7u1C"], "h7u1C", "parcelRequire259a")
 
 //# sourceMappingURL=index.b71e74eb.js.map

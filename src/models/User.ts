@@ -1,12 +1,13 @@
+import Eventing from "./Eventing";
+
 interface UserProps {
   name?: string;
   age?: number;
+  id?: number;
 }
 
-type Callback = () => void;
-
 class User {
-  events: { [key: string]: Callback } = {};
+  events: Eventing = new Eventing();
 
   constructor(private data: UserProps) {}
 
@@ -16,10 +17,6 @@ class User {
 
   set(update: UserProps): void {
     Object.assign(this.data, update);
-  }
-
-  on(eventName: string, callback: Callback): void {
-    //
   }
 }
 

@@ -558,48 +558,13 @@ function hmrAccept(bundle, id) {
 
 },{}],"h7u1C":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-var _user = require("./models/User");
-var _userDefault = parcelHelpers.interopDefault(_user);
-const user = new (0, _userDefault.default)({
-    name: `Mark`,
-    age: 0
-});
-// user.set({ name: `NEW NAME`, age: 100 });
-// user.save();
-user.events.on(`change`, ()=>console.log(`changed!`));
-user.events.trigger(`change`); // user.on(`change`, () => console.log(`change #1`));
- // user.on(`change`, () => console.log(`change #2`));
- // user.on(`asdf`, () => console.log(`change #3`));
- // user.ownFetch();
- // fetch(`http://localhost:3000/users/1`)
- //   .then((res) => res.json())
- //   .then((data) => {
- //     console.log(data);
- //   });
- // setTimeout(() => {
- //   console.log(user);
- // }, 4000);
+var _userForm = require("./views/UserForm");
+var _userFormDefault = parcelHelpers.interopDefault(_userForm);
+const root = document.getElementById(`root`);
+const userForm = new (0, _userFormDefault.default)(root);
+userForm.render();
 
-},{"./models/User":"4rcHn","@parcel/transformer-js/src/esmodule-helpers.js":"hNMw2"}],"4rcHn":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _eventing = require("./Eventing");
-var _eventingDefault = parcelHelpers.interopDefault(_eventing);
-class User {
-    constructor(data){
-        this.data = data;
-        this.events = new (0, _eventingDefault.default)();
-    }
-    get(propName) {
-        return this.data[propName];
-    }
-    set(update) {
-        Object.assign(this.data, update);
-    }
-}
-exports.default = User;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"hNMw2","./Eventing":"7459s"}],"hNMw2":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"hNMw2","./views/UserForm":"gXSLD"}],"hNMw2":[function(require,module,exports) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
@@ -629,23 +594,43 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}],"7459s":[function(require,module,exports) {
+},{}],"gXSLD":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-class Eventing {
-    events = {};
-    on(eventName, callback) {
-        const handlers = this.events[eventName] || [];
-        handlers.push(callback);
-        this.events[eventName] = handlers;
+class UserForm {
+    constructor(parent){
+        this.parent = parent;
     }
-    trigger(eventName) {
-        const handlers = this.events[eventName];
-        if (!handlers || handlers.length === 0) return;
-        handlers.forEach((callback)=>callback());
+    eventsMap() {
+        return {
+            "click:button": this.onButtonClick
+        };
+    }
+    onButtonClick() {
+        console.log(`Clicked`);
+    }
+    template() {
+        return `
+      <div>
+        <h1>UserForm</h1>
+        <input type="text" />
+        <button>Click Me!</button>
+      </div>
+    `;
+    }
+    bindEvents(fragment) {
+        const eventsMap = this.eventsMap();
+        for(const eventKey in eventsMap){
+            const [eventName, selector] = eventKey.split(`:`);
+        }
+    }
+    render() {
+        const templateEl = document.createElement(`template`);
+        templateEl.innerHTML = this.template();
+        this.parent.append(templateEl.content);
     }
 }
-exports.default = Eventing;
+exports.default = UserForm;
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"hNMw2"}]},["gzU1l","h7u1C"], "h7u1C", "parcelRequire259a")
 
